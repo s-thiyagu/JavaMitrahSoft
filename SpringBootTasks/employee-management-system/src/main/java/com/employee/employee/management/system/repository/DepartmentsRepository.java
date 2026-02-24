@@ -1,5 +1,6 @@
 package com.employee.employee.management.system.repository;
 
+import com.employee.employee.management.system.DTO.CreateDepartmentDTO;
 import com.employee.employee.management.system.DTO.DepartmentCountDTO;
 import com.employee.employee.management.system.DTO.GetTotalExpense;
 import com.employee.employee.management.system.DTO.TopSalaryEmpDTO;
@@ -26,7 +27,11 @@ public interface DepartmentsRepository extends JpaRepository<Departments,Long> {
     @Query(value ="SELECT d.department_id,d.department_name,sum(e.salary) As Expense FROM employees_details e LEFT JOIN departments_details d ON e.department_id=d.department_id group by department_id",nativeQuery = true)
     List<GetTotalExpense> getTotalExpPerDept();
 
-    @Query(value ="SELECT e.employee_id,e.employee_name,e.salary,d.department_id,department_name FROM employees_details e LEFT JOIN departments_details d ON e.department_id=d.department_id ORDER BY e.salary DESC LIMIT 5;",nativeQuery = true)
+    @Query(value ="SELECT e.employee_id,e.employee_name,e.salary,d.department_id,department_name FROM employees_details e LEFT JOIN departments_details d ON e.department_id=d.department_id ORDER BY e.salary DESC LIMIT 5",nativeQuery = true)
     List<TopSalaryEmpDTO> topEmpSalary();
+
+    @Query(value ="SELECT * FROM departments_details where department_id NOT IN(SELECT d.department_id FROM employees_details e INNER JOIN departments_details d ON e.department_id = d.department_id Group by d.department_id)",nativeQuery = true)
+    List<CreateDepartmentDTO> deptWithNoEmp();
+
 
 }

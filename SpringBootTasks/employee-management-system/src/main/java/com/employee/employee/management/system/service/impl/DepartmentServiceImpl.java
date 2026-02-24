@@ -16,6 +16,8 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     DepartmentsRepository departmentsRepository;
+
+    @Override
     public String createDepartments(CreateDepartmentDTO deptDetails){
         Departments department= new Departments();
         department.setDepartment_id(deptDetails.getDepartment_id());
@@ -24,16 +26,25 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentsRepository.insertDepartment(department.getDepartment_id(),department.getName(),department.getLocation());
         return "Department Details Created Successfully";
     }
+
+    @Override
     public List<DepartmentCountDTO> getEmpCountPerDept(){
         return departmentsRepository.getEmpCountPerDept();
     }
 
+    @Override
     public List<GetTotalExpense> getTotalExpPerDept(){
         return departmentsRepository.getTotalExpPerDept();
     }
 
+    @Override
     public List<TopSalaryEmpDTO> getTopEmpSalary(){
         return departmentsRepository.topEmpSalary();
+    }
+
+    @Override
+    public List<CreateDepartmentDTO> getDeptWithNoEmp(){
+        return departmentsRepository.deptWithNoEmp();
     }
 
 }

@@ -36,5 +36,10 @@ public class DepartmentController {
         return departmentService.getTopEmpSalary();
     }
 
+    @GetMapping("/deptWithNoEmp")
+    public List<CreateDepartmentDTO> getDeptWithNoEmp(){
+        return departmentService.getDeptWithNoEmp();
+    }
+
 
 }

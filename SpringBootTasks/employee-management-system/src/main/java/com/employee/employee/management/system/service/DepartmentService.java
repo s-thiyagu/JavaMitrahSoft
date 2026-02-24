@@ -9,4 +9,6 @@ public interface DepartmentService {
     List<DepartmentCountDTO> getEmpCountPerDept();
     List<GetTotalExpense> getTotalExpPerDept();
     List<TopSalaryEmpDTO> getTopEmpSalary();
+    List<CreateDepartmentDTO> getDeptWithNoEmp();
+
 }

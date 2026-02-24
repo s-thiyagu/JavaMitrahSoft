@@ -55,5 +55,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query(value ="Select d.department_id,d.department_name,e.status,count(e.status) AS Status FROM employees_details e LEFT JOIN departments_details d ON e.department_id=d.department_id group by e.status,e.department_id order by e.department_id",nativeQuery = true)
     List<DepartmentWiseStatus> departmentWiseStatus();
 
+    @Query(value ="SELECT e.employee_id,e.employee_name,e.salary,e.join_date,e.status,e.department_id  FROM employees_details e WHERE e.salary >= ( SELECT AVG(e2.salary) FROM employees_details e2 WHERE e2.department_id = e.department_id)",nativeQuery = true)
+    List<UpdateEmployeeDTO> empSalaryMoreThanAvg();
+
+    @Query(value ="select e.employee_id,e.employee_name,e.salary,e.join_date,e.status,e.department_id From employees_details e order by join_date Limit 3",nativeQuery = true)
+    List<UpdateEmployeeDTO> longestServingEmployees();
+
 }
 

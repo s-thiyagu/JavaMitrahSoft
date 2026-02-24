@@ -78,6 +78,17 @@ public  class EmployeeDetailsService implements EmployeeService {
         return employeeRepository.departmentWiseStatus();
     }
 
+    @Override
+    public List<UpdateEmployeeDTO> getEmpSalaryMoreThanAve(){
+        return employeeRepository.empSalaryMoreThanAvg();
+    }
+
+    @Override
+    public List<UpdateEmployeeDTO> getLongestServingEmployees(){
+        return employeeRepository.longestServingEmployees();
+    }
+
+
     private List<EmployeeDTo> transfer(List<Employee> emp){
         List<EmployeeDTo> listEmpDto= new ArrayList<>();
         for(Employee employee:emp){

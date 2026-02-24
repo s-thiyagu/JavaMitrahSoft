@@ -15,4 +15,6 @@ public interface EmployeeService {
     List<EmployeeDTo> getLastNMonth(Long months);
     UpdateEmployeeDTO getSearchEmployee(SearchEmployeeDTO employee);
     List<DepartmentWiseStatus> getDepartmentWiseStatus();
+    List<UpdateEmployeeDTO> getEmpSalaryMoreThanAve();
+    List<UpdateEmployeeDTO> getLongestServingEmployees();
 }
