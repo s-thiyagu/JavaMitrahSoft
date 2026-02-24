@@ -1,7 +1,6 @@
 package com.employee.employee.management.system.controller;
 
-import com.employee.employee.management.system.DTO.CreateEmployeeDTO;
-import com.employee.employee.management.system.DTO.EmployeeDTo;
+import com.employee.employee.management.system.DTO.*;
 import com.employee.employee.management.system.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("/employee")
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
@@ -36,8 +36,33 @@ public class EmployeeController {
     }
 
     @GetMapping("/getElementByStatus")
-    public List<EmployeeDTo> getEmpStatus(@RequestParam(name="status",required = false,defaultValue = "ACTIVE")String status){
+    public List<EmployeeDTo> getEmpStatus(@RequestParam(name="status",required = false,defaultValue = "Active")String status){
        return employeeService.getEmpStatus(status);
+    }
+
+    @PutMapping("/putById")
+    public String putById(@RequestBody UpdateEmployeeDTO employee){
+        return employeeService.putById(employee);
+    }
+
+    @GetMapping("/getEmpDept")
+    public List<EmpJoinDeptDTO> getEmpNameWithDept() {
+        return employeeService.getEmpNameWithDept();
+    }
+
+    @GetMapping("/getLastNMonth/{months}")
+    public List<EmployeeDTo> getLastNMonth(@PathVariable("months") Long months) {
+        return employeeService.getLastNMonth(months);
+    }
+
+    @PostMapping("/getSearchEmployee")
+    public UpdateEmployeeDTO getSearchEmployee (@RequestBody SearchEmployeeDTO employee) {
+        return employeeService.getSearchEmployee(employee);
+    }
+
+    @GetMapping("/getDepartmentWiseStatus")
+    public List<DepartmentWiseStatus> getDepartmentWiseStatus() {
+        return employeeService.getDepartmentWiseStatus();
     }
 
 }

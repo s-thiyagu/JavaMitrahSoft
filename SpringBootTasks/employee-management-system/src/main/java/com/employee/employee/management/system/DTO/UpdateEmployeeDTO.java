@@ -1,4 +1,5 @@
 package com.employee.employee.management.system.DTO;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -13,7 +14,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateEmployeeDTO {
+public class UpdateEmployeeDTO {
+
+    private Long empId;
 
     @NotBlank(message = "Employee name is required")
     private String name;
@@ -28,12 +31,9 @@ public class CreateEmployeeDTO {
     private Date joinDate;
 
     @NotBlank
-    private String status = "Active";
+    private String status;
 
     @NotNull(message = "Department ID is required")
     private Long departmentId;
 
-
 }
-
-
