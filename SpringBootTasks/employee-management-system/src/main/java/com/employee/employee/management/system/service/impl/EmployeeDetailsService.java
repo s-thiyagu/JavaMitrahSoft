@@ -1,6 +1,5 @@
 package com.employee.employee.management.system.service.impl;
-import com.employee.employee.management.system.DTO.CreateEmployeeDTO;
-import com.employee.employee.management.system.DTO.EmployeeDTo;
+import com.employee.employee.management.system.DTO.*;
 import com.employee.employee.management.system.entity.Employee;
 import com.employee.employee.management.system.repository.EmployeeRepository;
 import com.employee.employee.management.system.service.EmployeeService;
@@ -26,46 +25,73 @@ public  class EmployeeDetailsService implements EmployeeService {
         emp.setStatus(employee.getStatus());
         emp.setDepartmentId(employee.getDepartmentId());
         employeeRepository.insertEmployee(emp.getName(),emp.getSalary(),emp.getJoinDate(),emp.getStatus(),emp.getDepartmentId());
-        return "Inserted Successfully";
+        return "Employee Details Inserted Successfully";
     }
 
     @Override
-    public EmployeeDTo getElementById(Long empId) {
-        EmployeeDTo empDto=new EmployeeDTo();
-        Employee emp=employeeRepository.getElementByIdEmp(empId);
-        empDto.setEmpId(emp.getEmpId());
-        empDto.setName(emp.getName());
-        empDto.setStatus(emp.getStatus());
-        return empDto;
+    public String putById(UpdateEmployeeDTO emp){
+        employeeRepository.putById(emp.getEmpId(),emp.getName(),emp.getSalary(),emp.getJoinDate(),emp.getStatus(),emp.getDepartmentId());
+        return "Employee Details Updated Successfully";
     }
 
     @Override
     public String deleteEmployee(Long empId){
         employeeRepository.deleteByIdEmp(empId);
-        return "deleted  successfully";
+        return "Employee Details deleted  successfully";
+    }
+
+    @Override
+    public EmployeeDTo getElementById(Long empId) {
+        Employee emp=employeeRepository.getElementByIdEmp(empId);
+        return transferData(emp);
     }
 
     @Override
     public List<EmployeeDTo> getElements() {
-        List<Employee> emp= this.employeeRepository.findAll();
+        EmployeeDTo empDto=new EmployeeDTo();
+        List<Employee> emp= this.employeeRepository.getAllElement();
         return transfer(emp);
     }
 
     @Override
     public List<EmployeeDTo> getEmpStatus(String status) {
-        List<Employee> emp= this.employeeRepository.findByStatus(status);
+        List<Employee> emp= this.employeeRepository.getAllElementStatus();
         return transfer(emp);
+    }
+    @Override
+    public List<EmpJoinDeptDTO> getEmpNameWithDept(){
+        return employeeRepository.getEmpNameWithDept();
+    }
+
+    @Override
+    public List<EmployeeDTo> getLastNMonth(Long months){
+        return employeeRepository.lastNMonth(months);
+    }
+
+    @Override
+    public UpdateEmployeeDTO getSearchEmployee(SearchEmployeeDTO employee){
+        return employeeRepository.searchEmployee(employee.getName(),employee.getSalaryMin(),employee.getSalaryMax(),employee.getDepartmentId());
+    }
+
+    @Override
+    public List<DepartmentWiseStatus> getDepartmentWiseStatus(){
+        return employeeRepository.departmentWiseStatus();
     }
 
     private List<EmployeeDTo> transfer(List<Employee> emp){
         List<EmployeeDTo> listEmpDto= new ArrayList<>();
         for(Employee employee:emp){
-            EmployeeDTo empDto=new EmployeeDTo();
-            empDto.setEmpId(employee.getEmpId());
-            empDto.setName(employee.getName());
-            empDto.setStatus(employee.getStatus());
-            listEmpDto.add(empDto);
+            listEmpDto.add(transferData(employee));
         }
         return listEmpDto;
+    }
+    private EmployeeDTo transferData(Employee emp){
+        EmployeeDTo empDto=new EmployeeDTo();
+        empDto.setEmpId(emp.getEmpId());
+        empDto.setName(emp.getName());
+        empDto.setStatus(emp.getStatus());
+        empDto.setJoinDate(emp.getJoinDate());
+        empDto.setDepartmentId(emp.getDepartmentId());
+        return empDto;
     }
 }

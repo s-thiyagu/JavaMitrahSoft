@@ -1,5 +1,7 @@
 package com.employee.employee.management.system.DTO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateDepartmentDTO {
+
+    private Long department_id;
 
     @NotBlank
     private String name;
